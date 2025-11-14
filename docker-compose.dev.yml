@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  neon-local:
+    image: neondatabase/neon_local:latest
+    container_name: neon-local
+    ports:
+      - "5432:5432"
+    
+    env_file:
+      - .env.development
+    # Uncomment if you want to persist metadata; Neon Local itself is stateless
+    # volumes:
+    #   - neon-local:/var/lib/neon-local
+
+  app:
+    build:
+      context: .
+      target: dev
+    container_name: acquisitions-app-dev
+    depends_on:
+      - neon-local
+    env_file:
+      - .env.development
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+
+#volumes:
+#  neon-local:

@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: .
+      target: prod
+    container_name: acquisitions-app
+    restart: unless-stopped
+    env_file:
+      - .env.production
+      # DATABASE_URL comes from .env.production (Neon Cloud URL)
+    ports:
+      - "3000:3000"
