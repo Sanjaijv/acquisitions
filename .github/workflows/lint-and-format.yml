@@ -1,0 +1,84 @@
+name: Lint and Format
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        id: eslint
+        run: |
+          set -o pipefail
+          npm run lint 2>&1 | tee eslint-report.txt
+        continue-on-error: true
+
+      - name: Run Prettier check
+        id: prettier
+        run: |
+          set -o pipefail
+          npm run format:check 2>&1 | tee prettier-report.txt
+        continue-on-error: true
+
+      - name: Upload lint and format reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lint-and-format-reports
+          path: |
+            eslint-report.txt
+            prettier-report.txt
+          retention-days: 7
+
+      - name: Annotate ESLint issues
+        if: steps.eslint.outcome == 'failure'
+        run: |
+          echo "::error title=ESLint failed::ESLint found issues. Run 'npm run lint:fix' locally to auto-fix where possible. See eslint-report.txt artifact for details."
+
+      - name: Annotate Prettier issues
+        if: steps.prettier.outcome == 'failure'
+        run: |
+          echo "::error title=Prettier check failed::Prettier found formatting issues. Run 'npm run format' locally to fix them. See prettier-report.txt artifact for details."
+
+      - name: Fail workflow if lint or format failed
+        if: steps.eslint.outcome == 'failure' || steps.prettier.outcome == 'failure'
+        run: |
+          echo "Lint and/or format checks failed. Please fix the issues locally using 'npm run lint:fix' and 'npm run format'." >&2
+          exit 1
+
+      - name: Summary
+        if: always()
+        env:
+          ESLINT_OUTCOME: ${{ steps.eslint.outcome }}
+          PRETTIER_OUTCOME: ${{ steps.prettier.outcome }}
+        run: |
+          if [ "$ESLINT_OUTCOME" = "success" ]; then ESLINT_STATUS="success"; else ESLINT_STATUS="failed"; fi
+          if [ "$PRETTIER_OUTCOME" = "success" ]; then PRETTIER_STATUS="success"; else PRETTIER_STATUS="failed"; fi
+
+          {
+            echo "## Lint and Format Results";
+            echo;
+            echo "- ESLint: ${ESLINT_STATUS}";
+            echo "- Prettier: ${PRETTIER_STATUS}";
+            echo;
+            echo "If there are failures, download the 'lint-and-format-reports' artifact and run:";
+            echo "- npm run lint:fix";
+            echo "- npm run format";
+          } >> "$GITHUB_STEP_SUMMARY"

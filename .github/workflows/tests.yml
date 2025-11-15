@@ -1,0 +1,78 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, staging]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    env:
+      NODE_ENV: test
+      NODE_OPTIONS: --experimental-vm-modules
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        id: test
+        run: |
+          set -o pipefail
+          npm test -- --coverage 2>&1 | tee test-output.txt
+        continue-on-error: true
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage
+            test-output.txt
+          retention-days: 30
+
+      - name: Annotate test failures
+        if: steps.test.outcome == 'failure'
+        run: |
+          echo "::error title=Tests failed::One or more tests failed. Check the 'coverage-report' artifact and run 'npm test' locally to debug." 
+
+      - name: Tests summary
+        if: always()
+        run: |
+          STATUS="${{ steps.test.outcome }}"
+
+          {
+            echo "## Test Results";
+            echo;
+            echo "- Status: ${STATUS}";
+            if [ -f coverage/coverage-summary.json ]; then
+              echo;
+              echo "### Coverage Summary";
+              node -e "const s=require('./coverage/coverage-summary.json'); const t=s.total; console.log('Lines: ' + t.lines.pct + '%'); console.log('Statements: ' + t.statements.pct + '%'); console.log('Functions: ' + t.functions.pct + '%'); console.log('Branches: ' + t.branches.pct + '%');" || true;
+              echo;
+              echo "Full coverage details are available in the 'coverage-report' artifact.";
+            else
+              echo;
+              echo "Coverage summary file not found. Check the 'coverage-report' artifact if generated.";
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Fail workflow if tests failed
+        if: steps.test.outcome == 'failure'
+        run: |
+          echo "Tests failed. See the summary above and artifacts for details." >&2
+          exit 1
