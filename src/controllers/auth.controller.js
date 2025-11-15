@@ -40,7 +40,7 @@ export const signup = async (req, res, next )=>{
   }
 };
 
-export const signin = async (req, res, next) => {
+export const signIn = async (req, res, next) => {
   try{
     const validationResult = signInSchema.safeParse(req.body);
 
@@ -77,7 +77,7 @@ export const signin = async (req, res, next) => {
   }
 };
 
-export const signout = async (req, res, next) => {
+export const signOut = async (req, res, next) => {
   try{
     const token = cookies.get(req, 'token');
 

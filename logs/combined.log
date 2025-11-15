@@ -116,3 +116,28 @@
 {"level":"info","message":"User testing4@jsmastery.com created successfully","service":"aquisitions-api"}
 {"level":"info","message":"User registered successfully: testing4@jsmastery.com","service":"aquisitions-api"}
 {"level":"info","message":"::1 - - [14/Nov/2025:18:03:25 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 202 109 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"hello from Acquisition!","service":"aquisitions-api"}
+{"level":"info","message":"::1 - - [15/Nov/2025:02:15:29 +0000] \"GET / HTTP/1.1\" 304 - \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36\"","service":"aquisitions-api"}
+{"level":"info","message":"::1 - - [15/Nov/2025:02:15:29 +0000] \"GET /favicon.ico HTTP/1.1\" 404 150 \"-\" \"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36\"","service":"aquisitions-api"}
+{"level":"error","message":"Error authenticating user: Error: Invalid email or password","service":"aquisitions-api"}
+{"level":"error","message":"Signin error Invalid email or password","service":"aquisitions-api","stack":"Error: Invalid email or password\n    at authenticateUser (file:///usr/src/app/src/services/auth.service.js:58:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async signIn (file:///usr/src/app/src/controllers/auth.controller.js:56:18)"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:04:40 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 401 37 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"error","message":"Error authenticating user: Error: Invalid email or password","service":"aquisitions-api"}
+{"level":"error","message":"Signin error Invalid email or password","service":"aquisitions-api","stack":"Error: Invalid email or password\n    at authenticateUser (file:///usr/src/app/src/services/auth.service.js:58:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async signIn (file:///usr/src/app/src/controllers/auth.controller.js:56:18)"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:05:01 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 401 37 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"error","message":"Error authenticating user: Error: Invalid email or password","service":"aquisitions-api"}
+{"level":"error","message":"Signin error Invalid email or password","service":"aquisitions-api","stack":"Error: Invalid email or password\n    at authenticateUser (file:///usr/src/app/src/services/auth.service.js:58:13)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async signIn (file:///usr/src/app/src/controllers/auth.controller.js:56:18)"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:05:30 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 401 37 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:23:31 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 400 92 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"User sanjaijv@gmail.com created successfully","service":"aquisitions-api"}
+{"level":"info","message":"User registered successfully: sanjaijv@gmail.com","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:24:36 +0000] \"POST /api/auth/sign-up HTTP/1.1\" 202 105 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"User sanjaijv@gmail.com authenticated successfully","service":"aquisitions-api"}
+{"level":"info","message":"User signed in successfully: sanjaijv@gmail.com","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:25:04 +0000] \"POST /api/auth/sign-in HTTP/1.1\" 200 117 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:27:27 +0000] \"GET /api/users/8 HTTP/1.1\" 200 14 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:27:36 +0000] \"GET /api/users/3 HTTP/1.1\" 200 14 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:27:45 +0000] \"GET /api/users/7 HTTP/1.1\" 200 14 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:27:49 +0000] \"GET /api/users/1 HTTP/1.1\" 200 14 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:42:43 +0000] \"GET /api/users/1 HTTP/1.1\" 200 195 \"-\" \"HTTPie\"","service":"aquisitions-api"}
+{"level":"info","message":"::ffff:172.18.0.1 - - [15/Nov/2025:16:58:43 +0000] \"DELETE /api/users/1 HTTP/1.1\" 403 76 \"-\" \"HTTPie\"","service":"aquisitions-api"}
